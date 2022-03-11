@@ -6,7 +6,7 @@ class CartButton extends React.Component {
     return (
       <div>
         <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button">Carrinho</button>
+          <button type="button">Adicionar ao Carrinho</button>
         </Link>
       </div>
     );
