@@ -72,6 +72,7 @@ class Home extends React.Component {
         {productItems.map((product) => (
           <ProductCard
             key={ product.id }
+            id={ product.id }
             title={ product.title }
             thumbnail={ product.thumbnail }
             price={ product.price }
