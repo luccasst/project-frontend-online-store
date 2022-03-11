@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class CategoryButton extends React.Component {
   render() {
-    const { id, name } = this.props;
+    const { id, name, propButton } = this.props;
     return (
       <div>
         <label htmlFor={ id }>
@@ -12,6 +12,7 @@ class CategoryButton extends React.Component {
             id={ id }
             name="nameButton"
             type="radio"
+            onClick={ () => propButton(id) }
           />
           { name }
         </label>
@@ -23,6 +24,7 @@ class CategoryButton extends React.Component {
 CategoryButton.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  propButton: PropTypes.func.isRequired,
 };
 
 export default CategoryButton;

@@ -7,7 +7,7 @@ class ProductCard extends React.Component {
     return (
       <section data-testid="product">
         <img src={ thumbnail } alt={ title } />
-        <p>{ price }</p>
+        <p>{`R$ ${price}`}</p>
         <h3>{ title }</h3>
       </section>
 

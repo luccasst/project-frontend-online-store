@@ -11,10 +11,12 @@ class Home extends React.Component {
     this.state = {
       productItems: [],
       txtSearch: '',
+      categorySearch: '',
     };
 
     this.handleProducts = this.handleProducts.bind(this);
     this.handleValue = this.handleValue.bind(this);
+    this.handleCategoryButton = this.handleCategoryButton.bind(this);
   }
 
   componentDidMount() {
@@ -22,12 +24,17 @@ class Home extends React.Component {
   }
 
   async handleProducts() {
-    const { txtSearch } = this.state;
-    const getProducts = await getProductsFromCategoryAndQuery('', txtSearch);
+    const { txtSearch, categorySearch } = this.state;
+    const getProducts = await getProductsFromCategoryAndQuery(categorySearch, txtSearch);
     this.setState({
       productItems: [...getProducts.results],
     });
-    console.log(getProducts.results);
+  }
+
+  handleCategoryButton(productId) {
+    this.setState({
+      categorySearch: productId,
+    });
   }
 
   handleValue({ target }) {
@@ -38,11 +45,14 @@ class Home extends React.Component {
 
   render() {
     const { productItems, txtSearch } = this.state;
+    console.log(productItems.length);
     return (
       <div data-testid="home-initial-message">
         <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
         <CartButton />
-        <Categories />
+        <Categories
+          propButton={ this.handleCategoryButton }
+        />
         <div>
           <input
             data-testid="query-input"
