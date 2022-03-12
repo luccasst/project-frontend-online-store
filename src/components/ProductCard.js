@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import CartButtonAdd from './CartButtonAdd';
 
 class ProductCard extends React.Component {
   render() {
-    const { title, thumbnail, price, id } = this.props;
+    const { dataItem, isCart } = this.props;
+    const { title, thumbnail, price, id } = dataItem;
     return (
       <section data-testid="product">
         <Link
@@ -14,18 +16,29 @@ class ProductCard extends React.Component {
         >
           <img src={ thumbnail } alt={ title } />
           <p>{`R$ ${price}`}</p>
-          <h3>{ title }</h3>
+          <h3 data-testid="shopping-cart-product-name">
+            { title }
+          </h3>
         </Link>
+        {!isCart
+        && (
+          <CartButtonAdd
+            dataItem={ dataItem }
+            datatestid="product-add-to-cart"
+          />
+        )}
       </section>
     );
   }
 }
 
 ProductCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-};
+  dataItem: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+  }),
+}.isRequired;
 
 export default ProductCard;
