@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getProductsId } from '../services/api';
 import CartButton from '../components/CartButton';
+import CartButtonAdd from '../components/CartButtonAdd';
 
 class ProductDetail extends React.Component {
   constructor() {
@@ -25,15 +26,22 @@ class ProductDetail extends React.Component {
     };
 
     render() {
-      const { product: { title, thumbnail, warranty, condition, price } } = this.state;
+      const { product } = this.state;
+      const { title, thumbnail, warranty, condition, price } = product;
       return (
         <div data-testid="product-detail-name">
-          <h3>{title}</h3>
+          <h3>{ title }</h3>
           <img src={ thumbnail } alt={ title } />
           <p>{`R$ ${price}`}</p>
           <p>{`Condição: ${condition}`}</p>
-          <p>{warranty}</p>
+          <p>{ warranty }</p>
           <CartButton />
+          <div>
+            <CartButtonAdd
+              datatestid="product-detail-add-to-cart"
+              dataItem={ product }
+            />
+          </div>
         </div>
       );
     }

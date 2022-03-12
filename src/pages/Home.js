@@ -45,7 +45,6 @@ class Home extends React.Component {
 
   render() {
     const { productItems, txtSearch } = this.state;
-    console.log(productItems.length);
     return (
       <div data-testid="home-initial-message">
         <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
@@ -72,10 +71,8 @@ class Home extends React.Component {
         {productItems.map((product) => (
           <ProductCard
             key={ product.id }
-            id={ product.id }
-            title={ product.title }
-            thumbnail={ product.thumbnail }
-            price={ product.price }
+            dataItem={ product }
+            isCart={ false }
           />
         ))}
       </div>
