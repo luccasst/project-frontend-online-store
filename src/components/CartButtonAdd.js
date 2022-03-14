@@ -9,14 +9,27 @@ class CartButtonAdd extends React.Component {
   }
 
   addCartItem(item) {
-    if (localStorage.getItem('cartItens')) {
+    if (localStorage.getItem('cartItens')
+    && JSON.parse(localStorage.getItem('cartItens')).length !== 0) {
       const prevList = JSON.parse(localStorage.getItem('cartItens'));
-      localStorage.setItem(
-        'cartItens', JSON.stringify([...prevList, item]),
-      );
+      prevList.forEach((element) => {
+        if (element.id === item.id) {
+          element.qtLocalStorage += 1;
+          localStorage.setItem(
+            'cartItens', JSON.stringify([...prevList]),
+          );
+        } else {
+          item.qtLocalStorage = 1;
+          localStorage.setItem(
+            'cartItens', JSON.stringify([...prevList, item]),
+          );
+        }
+      });
     } else {
+      item.qtLocalStorage = 1;
       localStorage.setItem('cartItens', JSON.stringify([item]));
     }
+    console.log(JSON.parse(localStorage.getItem('cartItens')));
   }
 
   render() {

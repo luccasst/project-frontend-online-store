@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
+import ProductAddRemove from '../components/ProductAddRemove';
 
 class Cart extends React.Component {
   constructor() {
@@ -7,56 +8,50 @@ class Cart extends React.Component {
 
     this.state = {
       productItensList: [],
-      cartListUnique: [],
     };
-
-    this.handleUniqueList = this.handleUniqueList.bind(this);
+    this.handleLocalStorage = this.handleLocalStorage.bind(this);
   }
 
   componentDidMount() {
+    this.handleLocalStorage();
+  }
+
+  handleLocalStorage() {
     this.setState(
       {
         productItensList: JSON.parse(localStorage.getItem('cartItens'))
           ? JSON.parse(localStorage.getItem('cartItens'))
           : [],
-      }, () => this.handleUniqueList(),
+      },
     );
   }
 
-  handleUniqueList() {
-    const { productItensList } = this.state;
-    const lista = [];
-    productItensList.forEach((item) => {
-      if (lista.length === 0) lista.push(item);
-      if (lista.some((itemLista) => itemLista.id !== item.id)) {
-        lista.push(item);
-      }
-    });
-    this.setState({
-      cartListUnique: lista,
-    });
-  }
-
   render() {
-    const { productItensList, cartListUnique } = this.state;
+    const { productItensList } = this.state;
+    console.log(productItensList);
     return (
       <div data-testid="shopping-cart-empty-message">
         {productItensList.length === 0 ? (
           <p>Seu carrinho está vazio</p>)
           : (
-            cartListUnique.map((product, index) => (
+            productItensList.map((product, index) => (
               <div
                 key={ index }
               >
                 <p data-testid="shopping-cart-product-quantity">
                   {
-                    `Quantidade:
-                    ${productItensList.filter((item) => product.id === item.id).length}`
+                    `
+                    ${product.qtLocalStorage.toString}`
                   }
                 </p>
                 <ProductCard
                   dataItem={ product }
                   isCart
+                />
+                <ProductAddRemove
+                  key={ index }
+                  id={ product.id }
+                  propHandleLists={ this.handleLocalStorage }
                 />
               </div>
             ))
