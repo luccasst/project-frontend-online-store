@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getProductsId } from '../services/api';
 import CartButton from '../components/CartButton';
 import CartButtonAdd from '../components/CartButtonAdd';
+import Evaluation from '../components/Evaluation';
 
 class ProductDetail extends React.Component {
   constructor() {
@@ -26,8 +27,10 @@ class ProductDetail extends React.Component {
     };
 
     render() {
+      const { match: { params: { id } } } = this.props;
       const { product } = this.state;
       const { title, thumbnail, warranty, condition, price } = product;
+      console.log(id);
       return (
         <div data-testid="product-detail-name">
           <h3>{ title }</h3>
@@ -42,6 +45,7 @@ class ProductDetail extends React.Component {
               dataItem={ product }
             />
           </div>
+          <Evaluation id={ id } />
         </div>
       );
     }
