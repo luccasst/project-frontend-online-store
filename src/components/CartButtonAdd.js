@@ -29,7 +29,6 @@ class CartButtonAdd extends React.Component {
       item.qtLocalStorage = 1;
       localStorage.setItem('cartItens', JSON.stringify([item]));
     }
-    console.log(JSON.parse(localStorage.getItem('cartItens')));
   }
 
   render() {

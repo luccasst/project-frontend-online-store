@@ -28,7 +28,6 @@ class Cart extends React.Component {
 
   render() {
     const { productItensList } = this.state;
-    console.log(productItensList);
     return (
       <div data-testid="shopping-cart-empty-message">
         {productItensList.length === 0 ? (
@@ -38,12 +37,6 @@ class Cart extends React.Component {
               <div
                 key={ index }
               >
-                <p data-testid="shopping-cart-product-quantity">
-                  {
-                    `
-                    ${product.qtLocalStorage.toString}`
-                  }
-                </p>
                 <ProductCard
                   dataItem={ product }
                   isCart
