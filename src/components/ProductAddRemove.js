@@ -11,17 +11,12 @@ class ProductAddRemove extends React.Component {
 
   handleProductQuantity(id) {
     const productItensList = JSON.parse(localStorage.getItem('cartItens'));
-    console.log(productItensList.find((item) => id === item.id).qtLocalStorage);
     return productItensList.find((item) => id === item.id).qtLocalStorage;
   }
 
   handleSumProduct(id) {
     const productItensList = JSON.parse(localStorage.getItem('cartItens'));
-    productItensList.forEach((product) => {
-      if (product.id === id) {
-        product.qtLocalStorage += 1;
-      }
-    });
+    productItensList.find((product) => product.id === id).qtLocalStorage += 1;
     localStorage.setItem(
       'cartItens', JSON.stringify([...productItensList]),
     );
@@ -66,7 +61,7 @@ class ProductAddRemove extends React.Component {
           -
         </button>
         <p data-testid="shopping-cart-product-quantity">
-          {this.handleProductQuantity(id)}
+          { this.handleProductQuantity(id) }
         </p>
         <button
           data-testid="product-increase-quantity"
@@ -77,8 +72,8 @@ class ProductAddRemove extends React.Component {
           +
         </button>
         <button
-          onClick={ () => { this.handleRemoveAllProduct(id); propHandleLists(); } }
           type="button"
+          onClick={ () => { this.handleRemoveAllProduct(id); propHandleLists(); } }
         >
           x
         </button>
