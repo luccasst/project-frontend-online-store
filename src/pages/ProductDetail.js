@@ -30,7 +30,6 @@ class ProductDetail extends React.Component {
       const { match: { params: { id } } } = this.props;
       const { product } = this.state;
       const { title, thumbnail, warranty, condition, price } = product;
-      console.log(id);
       return (
         <div data-testid="product-detail-name">
           <h3>{ title }</h3>
