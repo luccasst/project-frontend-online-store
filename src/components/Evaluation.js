@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import EvaluationCard from './EvaluationCard';
 
 class Evaluation extends React.Component {
   constructor() {
@@ -10,14 +11,18 @@ class Evaluation extends React.Component {
       email: '',
       rating: '',
       isLoaded: false,
+      evaluations: [],
     };
+
     this.formEvaluation = this.formEvaluation.bind(this);
     this.handleLocalStorage = this.handleLocalStorage.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.renderLocalStorage = this.renderLocalStorage(this);
+    this.getLocalStorage = this.getLocalStorage.bind(this);
   }
 
   componentDidMount() {
+    const { id } = this.props;
+    this.getLocalStorage(id);
     this.setState({
       isLoaded: true,
     });
@@ -31,14 +36,31 @@ class Evaluation extends React.Component {
   }
 
   handleLocalStorage() {
-    const { textArea, email, rating } = this.state;
     const { id } = this.props;
+    const { textArea, email, rating } = this.state;
     const objEvaluation = {
       email,
       rate: rating,
       evaluate: textArea,
     };
-    localStorage.setItem(`evaluationItem${id}`, JSON.stringify(objEvaluation));
+    const local = JSON.parse(localStorage.getItem(`evaluationItem${id}`));
+    if (local) {
+      const newLocal = [...local, objEvaluation];
+      localStorage.setItem(`evaluationItem${id}`, JSON.stringify(newLocal));
+    } else {
+      localStorage.setItem(`evaluationItem${id}`, JSON.stringify([objEvaluation]));
+    }
+    this.getLocalStorage(id);
+    this.setState({
+      email: '',
+      textArea: '',
+    });
+  }
+
+  getLocalStorage(id) {
+    this.setState({
+      evaluations: JSON.parse(localStorage.getItem(`evaluationItem${id}`)),
+    });
   }
 
   formEvaluation() {
@@ -60,7 +82,6 @@ class Evaluation extends React.Component {
             <div
               key={ el }
               value={ el }
-              data-testid={ `${el}-rating` }
             >
               <label htmlFor="evaluation">
                 { el }
@@ -68,6 +89,7 @@ class Evaluation extends React.Component {
                   type="radio"
                   id="evaluation"
                   name="rating"
+                  data-testid={ `${el}-rating` }
                   value={ el }
                   onClick={ this.handleInput }
                 />
@@ -83,8 +105,8 @@ class Evaluation extends React.Component {
           />
           <br />
           <button
+            type="button"
             data-testid="submit-review-btn"
-            type="submit"
             onClick={ this.handleLocalStorage }
           >
             Enviar
@@ -93,32 +115,23 @@ class Evaluation extends React.Component {
       </section>);
   }
 
-  renderLocalStorage() {
-    console.log(this.props);
-    // const { id } = this.props;
-    // const request = JSON.parse(localStorage.getItem(`evaluationItem${id}`));
-    // return (
-    //   request && request.length > 0 ? (
-    //     request.map((obj, index) => (
-    //       <div key={ index }>
-    //         <p>{obj.email}</p>
-    //         <p>{obj.rate}</p>
-    //         <p>{obj.evaluate}</p>
-    //       </div>
-    //     ))
-    //   ) : ''
-    // );
-  }
-
   render() {
-    const { isLoaded } = this.state;
-    console.log(this.props);
+    const { isLoaded, evaluations } = this.state;
     return (
       <div>
         {this.formEvaluation()}
-        {isLoaded
+        {(isLoaded && evaluations && evaluations.length > 0)
         && (
-          (this.renderLocalStorage())
+          evaluations.map((item, index) => (
+            <section key={ index }>
+              <EvaluationCard
+                index={ index }
+                email={ item.email }
+                rate={ item.rate }
+                evaluate={ item.evaluate }
+              />
+            </section>
+          ))
         )}
       </div>
     );
