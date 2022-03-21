@@ -1,4 +1,5 @@
 import React from 'react';
+import Cart from './Cart';
 
 class Checkout extends React.Component {
   constructor() {
@@ -20,7 +21,7 @@ class Checkout extends React.Component {
               data-testid="checkout-fullname"
             />
             <input
-              type="number"
+              type="text"
               placeholder="CPF"
               data-testid="checkout-cpf"
             />
@@ -36,7 +37,7 @@ class Checkout extends React.Component {
             />
             <br />
             <input
-              type="number"
+              type="text"
               placeholder="CEP"
               data-testid="checkout-cep"
             />
@@ -59,7 +60,6 @@ class Checkout extends React.Component {
               placeholder="Cidade"
             />
             <select name="estados-brasil">
-              <option selected>Estado</option>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
               <option value="AP">Amapá</option>
@@ -145,10 +145,7 @@ class Checkout extends React.Component {
       <div>
         <fieldset>
           <h3>Revise seus Produtos</h3>
-          {/* <img src={ thumbnail } alt={ title } />
-          <h4>{ title }</h4>
-          <p>{`R$ ${price}`}</p>
-          <p>{`Total:R$ ${price}`}</p> */}
+          <Cart />
         </fieldset>
         {this.buyerInfo()}
         {this.paymentMethod()}

@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 import ProductAddRemove from '../components/ProductAddRemove';
+import CheckoutButton from '../components/CheckoutButton';
 
 class Cart extends React.Component {
   constructor() {
@@ -46,6 +47,7 @@ class Cart extends React.Component {
                   id={ product.id }
                   propHandleLists={ this.handleLocalStorage }
                 />
+                <CheckoutButton />
               </div>
             ))
           )}
